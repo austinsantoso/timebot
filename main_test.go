@@ -11,6 +11,4 @@ func TestOutputOne(t *testing.T) {
 	if output != value {
 		t.Fail()
 	}
-	t.Fail()
-
 }
