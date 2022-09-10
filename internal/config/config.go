@@ -2,6 +2,7 @@ package config
 
 import (
 	"flag"
+	"os"
 )
 
 type Config struct {
@@ -20,4 +21,8 @@ func (c *Config) Init() {
 
 func (c *Config) GetBotToken() string {
 	return c.Token
+}
+
+func (c *Config) GetBotTokenFromEnvVar() string {
+	return os.Getenv("TELEGRAM_BOT_TOKEN")
 }
