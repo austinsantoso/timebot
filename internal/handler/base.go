@@ -26,3 +26,10 @@ func IsUpdateBotMessage(update tgbotapi.Update) bool {
 
 	return false
 }
+
+func ExtractBotCommand(update tgbotapi.Update) string {
+	offset := update.Message.Entities[0].Offset
+	length := update.Message.Entities[0].Length
+	command := update.Message.Text[offset+1 : offset+length]
+	return command
+}
