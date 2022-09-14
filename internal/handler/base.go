@@ -10,6 +10,12 @@ type MessageHandler interface {
 
 var botCommandEntityType string = "bot_command"
 
+func SendMessage(bot *tgbotapi.BotAPI, update tgbotapi.Update, text string) {
+	msg := tgbotapi.NewMessage(update.Message.Chat.ID, text)
+
+	bot.Send(msg)
+}
+
 func IsUpdateMessage(update tgbotapi.Update) bool {
 	return update.Message != nil
 }

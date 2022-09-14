@@ -19,14 +19,13 @@ func (b *EchoBot) HandleUpdate(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		handleBotCommand(bot, update)
 	} else {
 		response = update.Message.Text
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, response)
-
-		bot.Send(msg)
+		handler.SendMessage(bot, update, response)
 	}
 }
 
 var commandsToFunction = map[string]func(*tgbotapi.BotAPI, tgbotapi.Update){
-	"now": handleNowCommand,
+	"now":  handleNowCommand,
+	"help": handleHelpCommand,
 }
 
 func handleBotCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
@@ -34,17 +33,32 @@ func handleBotCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 	f, ok := commandsToFunction[command]
 	if !ok {
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "command not found")
-
-		bot.Send(msg)
+		handler.SendMessage(bot, update, "command not found")
 		return
 	}
 
 	f(bot, update)
 }
 
-func handleNowCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-	msg := tgbotapi.NewMessage(update.Message.Chat.ID, time.NewTimeModule().String())
+func handleHelpCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+	text := `
+	Hello I am timebot 
+	<required field type>
 
-	bot.Send(msg)
+	/help - get help message\n
+
+	/now  - Get the current time
+	/millisecondsago <number> - Get the time number of days ago
+	/secondsago <number> - Get the time number of days ago
+	/minutessago <number> - Get the time number of days ago
+	/hourssago <number> - Get the time number of days ago
+	/daysago <number> - Get the time number of days ago
+	/weeksago <number> - Get the time number of week ago
+	`
+
+	handler.SendMessage(bot, update, text)
+}
+
+func handleNowCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+	handler.SendMessage(bot, update, time.Now().String())
 }
