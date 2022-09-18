@@ -10,3 +10,5 @@ require (
 	github.com/stretchr/testify v1.8.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+require github.com/golang/mock v1.6.0 // indirect

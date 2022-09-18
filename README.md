@@ -11,6 +11,7 @@ A telegram bot will usefull functions to tell the time.
 ## Prerequisites
 
 - GO version `1.17.0`
+- [mockgen](https://github.com/golang/mock) `v1.6.0`
 
 ## Deployment
 

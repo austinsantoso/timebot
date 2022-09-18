@@ -16,11 +16,20 @@ func NewSetTimeModule(ms int64) *TimeModule {
 	return &TimeModule{Timestamp: ms, time: gotime.UnixMilli(ms).UTC()}
 }
 
+func NewTimeModule(t gotime.Time) *TimeModule {
+	return NewSetTimeModule((t.UnixMilli()))
+}
+
 // returns go time but at UTC +00
-func NewTimeModule() *TimeModule {
+func Now() *TimeModule {
 	return NewSetTimeModule(gotime.Now().UnixMilli())
 }
 
 func (t *TimeModule) String() string {
 	return t.time.Format(timeFormat)
+}
+
+func (t *TimeModule) Add(d gotime.Duration) *TimeModule {
+	newTime := t.time.Add(d)
+	return NewTimeModule(newTime)
 }
