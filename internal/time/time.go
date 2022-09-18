@@ -1,7 +1,6 @@
 package time
 
 import (
-	"time"
 	gotime "time"
 )
 
@@ -18,7 +17,7 @@ func NewSetTimeModule(ms int64) *TimeModule {
 }
 
 func NewTimeModule(t gotime.Time) *TimeModule {
-	return NewSetTimeModule((t.Unix()))
+	return NewSetTimeModule((t.UnixMilli()))
 }
 
 // returns go time but at UTC +00
@@ -30,12 +29,7 @@ func (t *TimeModule) String() string {
 	return t.time.Format(timeFormat)
 }
 
-func (t *TimeModule) AddMilliseconds(d int64) *TimeModule {
-	newTime := t.time.Add(time.Millisecond * gotime.Duration(d))
-	return NewTimeModule(newTime)
-}
-
-func (t *TimeModule) AddSeconds(d int64) *TimeModule {
-	newTime := t.time.Add(time.Millisecond * gotime.Duration(d))
+func (t *TimeModule) Add(d gotime.Duration) *TimeModule {
+	newTime := t.time.Add(d)
 	return NewTimeModule(newTime)
 }

@@ -22,7 +22,7 @@ func (b *SimpleUpdater) Start(bot *tgbotapi.BotAPI, h handler.MessageHandler) {
 	updates := bot.GetUpdatesChan(u)
 
 	for update := range updates {
-		if handler.IsUpdateMessage(update) { // If we got a message
+		if handler.IsUpdateTextMessage(update) { // If we got a message
 			log.Printf("[Update][%s] %+v", update.Message.From.UserName, update)
 			log.Printf("[Message][%s] %+v", update.Message.From.UserName, update.Message)
 			log.Printf("[Text][%s] %s", update.Message.From.UserName, update.Message.Text)
